@@ -9,14 +9,33 @@ app.use(cors());
 
 console.log('+hello+');
 
+
 // checkout api
-app.get('/hi', (req, res)=>{
+/*
+console.log('-: WebHook Created :-');
+Only Once need to create webhook
+const webhookEndpoint = await stripe.webhookEndpoints.create({
+    enabled_events: ['charge.succeeded', 'charge.failed'],
+    url: 'http://37fb-45-64-223-11.ngrok-free.app/payment',
+    });
+*/
+
+app.post('/payment', (req, res)=>{
+    const body = req.body;
+
+    console.log('-: Payment Received '+parseInt(Math.random()*100)+'  :-');
+    console.log(body);
+    //res.send('Hello');
+    res.end();
+});
+
+app.get('/', (req, res)=>{
+    //console.log('-: Payment Received :-');
     res.send('Hello');
     res.end();
 });
 app.post("/api/create-checkout-session",async(req,res)=>{
     const {products} = req.body;
-
 
     const lineItems = products.map((product)=>({
         price_data:{
